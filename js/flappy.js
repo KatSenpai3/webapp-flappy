@@ -52,7 +52,7 @@ function create() {
     // add welcome text
 
     // initialise the player and associate it with playerImg
-    floor = game.add.sprite(0,400, "floor");
+    floor = game.add.sprite(0,390, "floor");
     fire = game.add.sprite(40, 180, "Fire");
     player = game.add.sprite(80, 200, "playerImg");
     game.add.text(20, 20, "GLHF",
@@ -74,6 +74,9 @@ function create() {
     game.input.keyboard.addKey(Phaser.Keyboard.LEFT_BUTTON).onDown.add(grav);
     // time loop for game to update
     game.time.events.loop(pipeInterval * Phaser.Timer.SECOND, generatePipe);
+
+    player.checkWorldBounds = true;
+    player.events.onOutOfBounds.add(gameOver);
 }
 function grav() {
     if(gravi==400) {gravi=1500} else {gravi=400};
@@ -82,10 +85,11 @@ function grav() {
 // This function updates the scene. It is called for every new frame.
 function update() {
     // Call gameOver function when player overlaps with any pipe
+    //game.physics.arcade.overlap(player, floor, gameOver);
+    game.physics.arcade.collide(player, pipes, gameOver);
 
-    game.physics.arcade
-        .overlap(player, pipes, gameOver);
-        .overlap(player, floor, gameOver);
+
+
 
 }
 
@@ -132,9 +136,7 @@ function changeScore() {
     // updates the score label
     labelScore.setText(score.toString());
 }
-if(player.body.y < 0 || player.body.y > 400){
-    gameOver();
-}
+
 function gameOver() {
     game.destroy();
     $("#score").val(score);
@@ -152,9 +154,3 @@ $.get("/score", function(scores){
             "</li>");
     }
 });
-if(player.body.y < 0) {
-    gameOver();
-}
-if(player.body.y > 400){
-    gameOver();
-}
