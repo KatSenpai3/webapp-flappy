@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<script type="text/javascript" src="../lib/phaser.min.js"></script>
+<script type="text/javascript" src="../js/flappy.js"></script>
+<script src="../lib/jquery.js"></script>
+
+
+<link rel="stylesheet" href="../lib/bootstrap.css"/>
+<div class="cotainer">
+    <div class="jumbotron">
+        <h1>Bouncy Hitbox</h1>
+        <p>Welcome to the worst game there is!</p>
+        </div>
+
+        <div id="game"> </div>
+
+    <div class="col-xs-4">
+            <p>The highest scorers are:</p>
+            <ul>
+                <li class="gold">Me</li>
+                <li class="score">Myself</li>
+                <li class="fail">I</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="greeting">
+    <h3>Save your score</h3>
+    <form id="greeting-form" class="form-inline">
+        <div class="form-group">
+
+            <label for="fullName">What's your name?</label>
+            <input type="text" id="fullName" class="form-control"
+                   name="fullName" placeholder="Bob">                   1
+
+            <label for="email">What's your email?</label>
+            <input type="email" id="email" class="form-control"
+                   name="email" placeholder="bob@email.com">            2
+
+            <input type="hidden" id="score" name="score" value="0">  3
+
+        </div>
+        <button class="btn btn-default" type="submit">OK</button>
+    </form>
+</div>
+
+</html>

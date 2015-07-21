@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ctrl+W</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="stylesheet" href="../lib/bootstrap.css" />
+</head>
+
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Dodgy Hitbox.exe</h1>
+        <p>B a sanic!</p>
+    </div>
+    <div class="row">
+        <div class="col-xs-8">
+            <div id="game"> </div>
+        </div>
+        <div class="col-xs-4">
+            <p>---The least REKT amongst the noobs:</p>
+            <ul id="scoreBoard">
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+
+<div id="greeting">
+    <h3>Save your score</h3>
+
+    <form id="greeting-form" method="post" action="/score">
+        <div class="form-group">
+            <label for="fullName">What's your name?</label>
+            <input type="text" id="fullName" name="fullName"
+                   class="form-control" placeholder="Bob" required>
+
+            <label for="email">What's your email?</label>
+            <input type="email" id="email"
+                   name="email" class="form-control"
+                   placeholder="bob@email.com">
+
+            <input type="hidden" id="score"
+                   name="score" value="0">
+        </div>
+        <button class="btn btn-default" type="submit">OK</button>
+    </form>
+</div>
+<script src="../lib/jquery.js"></script>
+<script src="../lib/phaser.min.js"></script>
+<script src="../js/flappy.js"></script>
+</body>
+
+</html>
