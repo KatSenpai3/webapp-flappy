@@ -6,10 +6,10 @@ function changeScore() {
     // updates the score label
     labelScore.setText(score.toString());
 }// the functions associated with preload, create and update.
-var actions = { preload: preload, create: create, update: update };
-// the Game object used by the phaser.io library
-var game = new Phaser.Game(790, 400, Phaser.AUTO, "game", actions);
-// Global score variable initialised to 0.
+var actions = { preload: preload, create: create, update: update }; 1
+// Some more instructions
+var game = new Phaser.Game(width, height, Phaser.AUTO, "game", actions); 2
+// The rest of the file
 var score = 0;
 // Global variable to hold the text displaying the score.
 var labelScore;
@@ -44,9 +44,12 @@ function preload() {
     game.load.image("Fire","../assets/fire.png");
     game.load.image("floor","../assets/floor.png")
 }
+function create(){
+    game.input.keyboard.addkey(Phaser.Keyboard.ENTER).ondown.add(start);
+}
 
 // Initialises the game. This function is only called once.
-function create() {
+function start() {
     // set the background colour of the scene
     game.stage.setBackgroundColor("#ASDFGH"); //blue2A8C8B
     // add welcome text
