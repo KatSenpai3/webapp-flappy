@@ -6,9 +6,11 @@ function changeScore() {
     // updates the score label
     labelScore.setText(score.toString());
 }// the functions associated with preload, create and update.
-var actions = { preload: preload, create: create, update: update }; 1
+var actions = { preload: preload, create: create, update: update };
 // Some more instructions
-var game = new Phaser.Game(width, height, Phaser.AUTO, "game", actions); 2
+var backgroungVelocity = 0.11;
+
+var game = new Phaser.Game(790, 400, Phaser.AUTO, "game", actions);
 // The rest of the file
 var score = 0;
 // Global variable to hold the text displaying the score.
@@ -42,16 +44,31 @@ function preload() {
     // make image file available to game and associate with alias pipe
     game.load.image("pipe","../assets/pipe.png");
     game.load.image("Fire","../assets/fire.png");
-    game.load.image("floor","../assets/floor.png")
+    game.load.image("floor","../assets/floor.png");
+    game.load.image("background", "../assets/images.jpg");
 }
 function create(){
-    game.input.keyboard.addkey(Phaser.Keyboard.ENTER).ondown.add(start);
+    game.stage.setBackgroundColor("#2A8C8B"); //blue2A8C8B
+    game.add.text(280, 180, "Enter To Begin",
+        {font:"30px Arial", fill: "#ASDFGH"});
+    game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.add(start);
+
 }
 
+var bgtile;
 // Initialises the game. This function is only called once.
 function start() {
-    // set the background colour of the scene
+    //game.time.events.loop(1 * Phaser.Timer.SECOND, function(){
+    //    var background = game.add.sprite(0, 0, "background");
+    //    game.physics.arcade.enable(background);
+    //    background.body.velocity.x = -backgroungVelocity;
+    //});
+    bgtile = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background').height, 'background');
+
+    game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.remove(start);
     game.stage.setBackgroundColor("#ASDFGH"); //blue2A8C8B
+    // set the background colour of the scene
+
     // add welcome text
 
     // initialise the player and associate it with playerImg
@@ -74,23 +91,22 @@ function start() {
     fire.body.gravity.y = gravi;
     // associate spacebar with jump function
     game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(playerJump);
-    game.input.keyboard.addKey(Phaser.Keyboard.LEFT_BUTTON).onDown.add(grav);
+
     // time loop for game to update
     game.time.events.loop(pipeInterval * Phaser.Timer.SECOND, generatePipe);
 
     player.checkWorldBounds = true;
     player.events.onOutOfBounds.add(gameOver);
 }
-function grav() {
-    if(gravi==400) {gravi=1500} else {gravi=400};
-    player.body.gravity.y=gravi;
-}
+
 // This function updates the scene. It is called for every new frame.
 function update() {
     // Call gameOver function when player overlaps with any pipe
     //game.physics.arcade.overlap(player, floor, gameOver);
     game.physics.arcade.collide(player, pipes, gameOver);
 
+    if (bgtile)
+        bgtile.tilePosition.x -= 30;
 
 
 
@@ -141,9 +157,10 @@ function changeScore() {
 }
 
 function gameOver() {
-    game.destroy();
+    game.state.restart();
     $("#score").val(score);
     $("#greeting").show();
+
 }
 $.get("/score", function(scores){
     scores.sort(function (scoreA, scoreB){
